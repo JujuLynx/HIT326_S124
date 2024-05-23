@@ -226,3 +226,5 @@ if (strpos($response->body(), '{exec_time}') !== false or strpos($response->body
  */
 
 $response->send(true);
+
+?>
