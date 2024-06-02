@@ -7,4 +7,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='pg_app/logged_out.html'), name='logout'),
     path('signup/', views.signup, name='signup'),
     path('profile/', views.profile, name='profile'),
+
+    path('create_task', views.create_task, name='create_task'),
+    path('tasks/<int:task_id>/complete/', views.mark_task_complete, name='mark_task_complete')
 ]

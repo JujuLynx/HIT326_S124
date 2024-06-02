@@ -10,22 +10,16 @@
     <div style="text-align: center; margin-top: 20px;">
     <p>Welcome, {{ user.username }}!</p>
     <p><a href="{% url 'password_change' %}">Change Password</a> | <a href="{% url 'logout' %}">Logout</a></p>
-
-    <a href="{% url 'create_task' %}">Create a New Task</a>
-
-    <h1>My Tasks</h1>
-    <ul>
-        {% for task in user_tasks %}
-            <li>
-                {{ task.title }}
-                <form method="post" action="{% url 'mark_task_complete' task.id %}">
-                    {% csrf_token %}
-                    <button type="submit">Complete</button>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
-
 {% endif %}
+
+<h1>Create Task</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="title">Title:</label><br>
+    <input type="text" id="title" name="title"><br>
+    <label for="description">Description:</label><br>
+    <textarea id="description" name="description"></textarea><br>
+    <input type="submit" value="Create Task">
+</form>
 
 {% endblock %}

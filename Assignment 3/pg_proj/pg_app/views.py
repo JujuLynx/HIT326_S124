@@ -1,9 +1,12 @@
 from django.http import HttpResponse
+
 from django.contrib.auth.decorators import login_required, permission_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
 from .forms import SignUpForm
 from .models import TeamMember
+from django.shortcuts import render, redirect
+from .models import Task
 
 def signup(request):
     if request.method == 'POST':
@@ -29,7 +32,10 @@ def profile(request):
     return render(request, 'pg_app/profile.html')
 
 def home(request):
-    return render(request, 'pg_app/home.html')
+    user_tasks = None
+    if request.user.is_authenticated:
+        user_tasks = Task.objects.filter(user=request.user)
+    return render(request, 'pg_app/home.html', {'user_tasks': user_tasks})
 
 def about(request):
     member1 = TeamMember('Damon Zhang', 's364662', 's364662@students.cdu.edu.au')
@@ -38,3 +44,21 @@ def about(request):
 
     context = {'team_members': team_members}
     return render(request, 'pg_app/about.html', context)
+
+def create_task(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        new_task = Task(
+            title = title,
+            description = description,
+            user = request.user)
+        new_task.save()
+        return redirect('home')
+
+    return render(request, 'create_task.html')
+
+def mark_task_complete(request, task_id):
+    task = get_object_or_404(Task, id = task_id)
+    task.delete()
+    return redirect('home')
