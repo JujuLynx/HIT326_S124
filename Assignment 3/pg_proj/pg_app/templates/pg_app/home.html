@@ -17,7 +17,9 @@
         <ul>
             {% for task in user_tasks %}
                 <li class="task-item">
-                    <span class="task-title">{{ task.title }}</span>
+                    <a href="{% url 'task_detail' task.id %}" class="task-link">
+                        <span class="task-title">{{ task.title }}</span>
+                    </a>
                     <form method="post" action="{% url 'mark_task_complete' task.id %}" class="task-form">
                         {% csrf_token %}
                         <button type="submit">Complete</button>

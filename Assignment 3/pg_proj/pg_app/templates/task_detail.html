@@ -1,0 +1,23 @@
+{% extends "pg_app/base.html" %}
+{% block body %}
+          
+<div class="banner" style="text-align: center; padding: 30px">
+    <h1>Your tasks, organized and simplified.</h1>
+    <p>Stay Organized, Stay Productive: Manage Your Tasks with Ease.</p>
+</div>
+      
+{% if user.is_authenticated %}
+    <div style="text-align: center; margin-top: 20px;">
+    <p>Welcome, {{ user.username }}!</p>
+    <p><a href="{% url 'password_change' %}">Change Password</a> | <a href="{% url 'logout' %}">Logout</a></p>
+{% endif %}
+
+<h1>{{ task.title }}</h1>
+<p>{{ task.description }}</p>
+
+<form method="post" action="{% url 'mark_task_complete' task.id %}">
+    {% csrf_token %}
+    <button type="submit">Delete Task</button>
+</form>
+
+{% endblock %}
