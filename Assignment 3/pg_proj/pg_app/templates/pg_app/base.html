@@ -1,0 +1,41 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    {%block title%} HIT326 Group {%endblock%}
+  </title>
+  <link rel="stylesheet" href="{% static 'pg_app/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  <div class="header">
+    <div class="logo">HIT326 Group 1</div>
+    <ul class="navbar">
+      <li><a href="{% url 'home' %}">HOME</a></li>
+      <li><a href="{% url 'about' %}">ABOUT</a></li>
+      {% if user.is_authenticated %}
+        <li><a href="{% url 'profile' %}">Profile</a></li>
+  
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+      {% else %}
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'signup' %}">Sign Up</a></li>
+      {% endif %}
+    </ul>
+  </div>
+
+  <div>
+    {% block body %}{% endblock %}
+  </div>
+
+</body>
+
+<footer>
+    <p><strong>HIT326 Group Project (Group 1)</strong></p>
+    <p>Damon Zhang S364662 | Matt Bonfanti S349051 </p>
+    <p>&copy; 2024 Thesis Topics. All rights reserved.</p>
+</footer>
+</html>
