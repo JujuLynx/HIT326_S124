@@ -7,6 +7,7 @@ from .forms import SignUpForm
 from .models import TeamMember
 from django.shortcuts import render, redirect
 from .models import Task
+from django.utils.html import escape
 
 def signup(request):
     if request.method == 'POST':
@@ -47,8 +48,8 @@ def about(request):
 
 def create_task(request):
     if request.method == 'POST':
-        title = request.POST.get('title')
-        description = request.POST.get('description')
+        title = escape(request.POST.get('title', ''))
+        description = escape(request.POST.get('description', ''))
         new_task = Task(
             title = title,
             description = description,
